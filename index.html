@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="dir-row">
+            <canvas id="canvas">Canvas...</canvas>
+            
+            <div class="dir-col">
+                <div>
+                    <input type="number" id="nodeRadius" value="50"/>
+                    <label for="nodeRadius">Node Radius</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showFps" value="false"/>
+                    <label for="showFps">show FPS</label>
+                </div>
+                <button type="button" id="saveGraph">Save Graph</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./scripts/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+body {
+    background-color: #111;
+}
+
+.container {
+    display: flex;
+    
+}
+
+.container .dir-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.container .dir-col{
+    display: flex;
+    flex-direction: column;
+}
+
+canvas {
+    background-color: #333;
+}
+
+label {
+    color: white;
+    margin: 10px;
+}
