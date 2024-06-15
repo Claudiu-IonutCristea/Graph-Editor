@@ -8,14 +8,17 @@ export class GraphConnection implements IPhysicsSpring
     private source: GraphNode;
     private target: GraphNode;
     private directed: boolean;
+    private weight: number;
     private idealLength: number;
 
     constructor(source: GraphNode, target: GraphNode)
     {
         this.source = source;
         this.target = target;
+
         this.directed = false;
         this.idealLength = 200 + this.source.Radius + this.target.Radius;
+        this.weight = 0;
     }
 
     public get Directed() { return this.directed; }
@@ -26,6 +29,9 @@ export class GraphConnection implements IPhysicsSpring
 
     public get IdealLength() { return this.idealLength; }
     public set IdealLength(value: number) { this.idealLength = value + this.source.Radius + this.target.Radius; }
+
+    public get Weight() { return this.weight; }
+    public set Weight(value: number) { this.weight = this.weight; }
 
     public get Distance() { return Vector.Distance(this.source, this.target); }
     
