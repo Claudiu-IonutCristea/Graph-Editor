@@ -32,10 +32,7 @@ Canvas.Ctx = ctxQ;
 Canvas.Canvas.width = 900;
 Canvas.Canvas.height = 900;
 
-window.requestAnimationFrame((time) => 
-{
-   Start(time);
-});
+window.requestAnimationFrame(Start);
 
 function Start(time: number)
 {
@@ -75,17 +72,15 @@ function Start(time: number)
         });
     }
         
-    window.requestAnimationFrame((time) =>
-    {
-        Update(time);
-    });
+    window.requestAnimationFrame(Update);
+    FixedUpdate();
 }
 
 function Update(time: number)
 {
     Time.Update(time);
     Canvas.Ctx.clearRect(0, 0, Canvas.Canvas.width, Canvas.Canvas.height);
-
+    
     if(showFpsQ?.checked)
     {
         Canvas.Ctx.beginPath();
@@ -96,13 +91,22 @@ function Update(time: number)
         Canvas.Ctx.fillText(Time.FPS.toString(), 0, 0);
     }
 
+        
     GraphManager.Instance.UpdateGraph();
-
+    
     // Canvas.Ctx.beginPath();
     // Canvas.Ctx.arc(450, 450, 5, 0, 2 * Math.PI);
     // Canvas.Ctx.fillStyle = "red";
     // Canvas.Ctx.fill();
-
+    
     window.requestAnimationFrame(Update);
 }
 
+function FixedUpdate()
+{
+    GraphManager.Instance.FixedUpdate();
+
+    setTimeout(() => {
+        FixedUpdate()
+    }, Time.FixedDeltaTime * 1000);
+}

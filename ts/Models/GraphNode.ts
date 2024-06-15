@@ -100,11 +100,11 @@ export class GraphNode implements ICircle, IPhysicsObject
             Y: force.Y / this.mass
         };
 
-        this.Velocity.X += acceleration.X * Time.DeltaTime;
-        this.Velocity.Y += acceleration.Y * Time.DeltaTime;
+        this.Velocity.X += acceleration.X * Time.FixedDeltaTime;
+        this.Velocity.Y += acceleration.Y * Time.FixedDeltaTime;
 
-        this.X += this.Velocity.X * Time.DeltaTime;
-        this.Y += this.Velocity.Y * Time.DeltaTime;
+        this.X += this.Velocity.X * Time.FixedDeltaTime;
+        this.Y += this.Velocity.Y * Time.FixedDeltaTime;
     }
 
     public ResetVelocity()

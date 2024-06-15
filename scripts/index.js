@@ -29,9 +29,7 @@ Canvas.Canvas = canvasQ;
 Canvas.Ctx = ctxQ;
 Canvas.Canvas.width = 900;
 Canvas.Canvas.height = 900;
-window.requestAnimationFrame((time) => {
-    Start(time);
-});
+window.requestAnimationFrame(Start);
 function Start(time) {
     Time.Start(time);
     GraphManager.Instance.NodeRadius = nodeRadiusQ.valueAsNumber;
@@ -58,9 +56,8 @@ function Start(time) {
             GraphManager.Instance.AddConnection(nodeA, nodeB);
         });
     }
-    window.requestAnimationFrame((time) => {
-        Update(time);
-    });
+    window.requestAnimationFrame(Update);
+    FixedUpdate();
 }
 function Update(time) {
     Time.Update(time);
@@ -79,4 +76,10 @@ function Update(time) {
     // Canvas.Ctx.fillStyle = "red";
     // Canvas.Ctx.fill();
     window.requestAnimationFrame(Update);
+}
+function FixedUpdate() {
+    GraphManager.Instance.FixedUpdate();
+    setTimeout(() => {
+        FixedUpdate();
+    }, Time.FixedDeltaTime * 1000);
 }

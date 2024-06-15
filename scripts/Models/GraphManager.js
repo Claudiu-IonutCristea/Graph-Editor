@@ -87,9 +87,6 @@ export class GraphManager {
     }
     //#endregion
     UpdateGraph() {
-        this.ApplyForces();
-        this.ApplyGravity();
-        this.nodes.forEach((node) => Physics.UpdatePosition(node));
         this.connections.forEach((conn) => {
             conn.Draw();
         });
@@ -98,6 +95,9 @@ export class GraphManager {
         });
     }
     FixedUpdate() {
+        this.ApplyForces();
+        this.ApplyGravity();
+        this.nodes.forEach((node) => Physics.UpdatePosition(node));
     }
     ApplyGravity() {
         const centerPos = { X: Canvas.Canvas.width / 2, Y: Canvas.Canvas.height / 2 };

@@ -6,6 +6,7 @@ export class Time
     private static oldTime: number;
 
     public static get DeltaTime() { return this.deltaTime; }
+    public static get FixedDeltaTime() { return 0.005; }
     public static get FPS() { return Math.round(1/this.deltaTime); }
 
     public static Start(currentTime: number)

@@ -131,11 +131,6 @@ export class GraphManager
 
     public UpdateGraph()
     {
-        this.ApplyForces();
-        this.ApplyGravity();
-
-        this.nodes.forEach((node) => Physics.UpdatePosition(node));
-
         this.connections.forEach((conn) =>
         {
             conn.Draw();
@@ -149,7 +144,10 @@ export class GraphManager
 
     public FixedUpdate()
     {
-        
+        this.ApplyForces();
+        this.ApplyGravity();
+
+        this.nodes.forEach((node) => Physics.UpdatePosition(node));
     }
 
     public ApplyGravity()
