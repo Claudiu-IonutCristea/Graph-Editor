@@ -22,6 +22,22 @@ export class Vector
         }
     }
 
+    public static Subtract(a: IVector, b:IVector): IVector
+    {
+        return {
+            X: a.X - b.X,
+            Y: a.Y - b.Y,
+        }
+    }
+
+    public static Negate(vector: IVector): IVector
+    {
+        return {
+            X: -vector.X,
+            Y: -vector.Y
+        }
+    }
+
     public static Distance(a: IVector, b: IVector): number
     {
         return Math.sqrt(this.DistanceSquared(a, b));

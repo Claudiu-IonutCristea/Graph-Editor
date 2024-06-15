@@ -124,8 +124,8 @@ export class GraphManager
     public GetConnection(a: GraphNode, b: GraphNode): GraphConnection | undefined
     {
         return this.connections.find((conn) => 
-            (conn.NodeA === a && conn.NodeB === b) ||
-            (conn.NodeA === b && conn.NodeB === a)
+            (conn.Source === a && conn.Target === b) ||
+            (conn.Source === b && conn.Target === a)
         );
     }
     //#endregion
@@ -158,6 +158,7 @@ export class GraphManager
             Y: this.selectedNode.Y - mousePos.Y
         };
 
+        this.selectedNode.IsAffectedByPhysics = false;
         console.log(`Clicked on node at ${Vector.String(this.selectedNode)}`);
     }
 
@@ -177,6 +178,7 @@ export class GraphManager
             this.selectedNode.Fixed = !this.selectedNode.Fixed;
         }
 
+        this.selectedNode.IsAffectedByPhysics = true;
         this.isMouseMoving = false;
         this.selectedNode = undefined;
     }

@@ -81,8 +81,8 @@ export class GraphManager {
         console.debug(connection);
     }
     GetConnection(a, b) {
-        return this.connections.find((conn) => (conn.NodeA === a && conn.NodeB === b) ||
-            (conn.NodeA === b && conn.NodeB === a));
+        return this.connections.find((conn) => (conn.Source === a && conn.Target === b) ||
+            (conn.Source === b && conn.Target === a));
     }
     //#endregion
     Draw() {
@@ -105,6 +105,7 @@ export class GraphManager {
                 X: this.selectedNode.X - mousePos.X,
                 Y: this.selectedNode.Y - mousePos.Y
             };
+        this.selectedNode.IsAffectedByPhysics = false;
         console.log(`Clicked on node at ${Vector.String(this.selectedNode)}`);
     }
     OnCanvasMouseUp(event) {
@@ -119,6 +120,7 @@ export class GraphManager {
             //a node has been clicked (but NOT moved)
             this.selectedNode.Fixed = !this.selectedNode.Fixed;
         }
+        this.selectedNode.IsAffectedByPhysics = true;
         this.isMouseMoving = false;
         this.selectedNode = undefined;
     }

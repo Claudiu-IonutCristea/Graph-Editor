@@ -14,6 +14,7 @@ export class GraphNode implements IVector, ICircle, IPhysicsObject
     private value: string;
     private fixed: boolean;
     private forces: Array<IVector>;
+    private isAffectedByPhysics: boolean;
 
     constructor(vector: IVector, value: string)
     {
@@ -24,6 +25,7 @@ export class GraphNode implements IVector, ICircle, IPhysicsObject
         this.radius = 0;
         this.fixed = false;
         this.forces = new Array<IVector>;
+        this.isAffectedByPhysics = true;
     }
 
     public get X() { return this.x }
@@ -31,6 +33,9 @@ export class GraphNode implements IVector, ICircle, IPhysicsObject
 
     public get Y() { return this.y }
     public set Y(value: number) { this.y = value; }
+
+    public get Position() { return {X: this.x, Y: this.y} }
+    public set Position(value: IVector) { this.x = value.X; this.y = value.Y; }
 
     public get Radius() { return this.radius }
     public set Radius(value: number) { this.radius = value; }
@@ -40,6 +45,9 @@ export class GraphNode implements IVector, ICircle, IPhysicsObject
 
     public get Fixed() { return this.fixed }
     public set Fixed(value: boolean) { this.fixed = value; }
+
+    public get IsAffectedByPhysics() { return this.isAffectedByPhysics && !this.fixed; }
+    public set IsAffectedByPhysics(value: boolean) { this.isAffectedByPhysics = value; }
 
     public get Forces() { return this.forces; }
 
@@ -61,35 +69,5 @@ export class GraphNode implements IVector, ICircle, IPhysicsObject
         Canvas.Ctx.textAlign = "center";
         Canvas.Ctx.textBaseline = "middle";
         Canvas.Ctx.fillText(this.value, this.x, this.y);
-
-        //Velocity
-        // Canvas.Ctx.beginPath();
-        // Canvas.Ctx.moveTo(this.x, this.y);
-        // Canvas.Ctx.lineTo(this.X + this.velocity.X, this.Y + this.velocity.Y);
-        // Canvas.Ctx.lineWidth = 3;
-        // Canvas.Ctx.strokeStyle = "green";
-        // Canvas.Ctx.stroke();
-
-        // Canvas.Ctx.beginPath();
-        // Canvas.Ctx.fillStyle = "green";
-        // Canvas.Ctx.font = `24px Courier-New`;
-        // Canvas.Ctx.textAlign = "left";
-        // Canvas.Ctx.textBaseline = "middle";
-        // Canvas.Ctx.fillText(MyMath.RoundTo(Vector.Magnitude(this.Velocity), 1).toString(), this.x + this.radius, this.y);
-
-        // //drag
-        // Canvas.Ctx.beginPath();
-        // Canvas.Ctx.moveTo(this.x, this.y);
-        // Canvas.Ctx.lineTo(this.X + this.DragForce.X, this.Y + this.DragForce.Y);
-        // Canvas.Ctx.lineWidth = 3;
-        // Canvas.Ctx.strokeStyle = "red";
-        // Canvas.Ctx.stroke();
-
-        // Canvas.Ctx.beginPath();
-        // Canvas.Ctx.fillStyle = "red";
-        // Canvas.Ctx.font = `24px Courier-New`;
-        // Canvas.Ctx.textAlign = "right";
-        // Canvas.Ctx.textBaseline = "middle";
-        // Canvas.Ctx.fillText(MyMath.RoundTo(Vector.Magnitude(this.DragForce), 1).toString(), this.x - this.radius, this.y);
     }
 }

@@ -6,6 +6,7 @@ const canvasQ = document.querySelector("#canvas");
 const nodeRadiusQ = document.querySelector("#nodeRadius");
 const showFpsQ = document.querySelector("#showFps");
 const saveGraphQ = document.querySelector("#saveGraph");
+const stepPhysicsQ = document.querySelector("#stepPhysics");
 const ctxQ = canvasQ === null || canvasQ === void 0 ? void 0 : canvasQ.getContext("2d");
 if (!canvasQ || !ctxQ) {
     throw new Error("Canvas or 2DContext not found!");
@@ -19,12 +20,18 @@ if (!showFpsQ) {
 if (!saveGraphQ) {
     throw new Error("Save Graph button not found!");
 }
+if (!stepPhysicsQ) {
+    throw new Error("Step Physics button not found!");
+}
 nodeRadiusQ.addEventListener("change", (e) => {
     console.log(`Set new node radius value at ${nodeRadiusQ.valueAsNumber}`);
     GraphManager.Instance.NodeRadius = nodeRadiusQ.valueAsNumber;
 });
 saveGraphQ.addEventListener("click", (e) => {
     GraphManager.Instance.SaveGraph();
+});
+stepPhysicsQ.addEventListener("click", (e) => {
+    Physics.Update();
 });
 Canvas.Canvas = canvasQ;
 Canvas.Ctx = ctxQ;
@@ -37,10 +44,12 @@ function Start(time) {
     GraphManager.Instance.DirectedGraph = false;
     const a = GraphManager.Instance.CreateNode({ X: 225, Y: 225 }, "A");
     const b = GraphManager.Instance.CreateNode({ X: 675, Y: 225 }, "B");
-    // const c = GraphManager.Instance.CreateNode({X: 225, Y: 675}, "C");
-    // const d = GraphManager.Instance.CreateNode({X: 675, Y: 675}, "D");
-    // const e = GraphManager.Instance.CreateNode({X: 50, Y: 50}, "E");
-    GraphManager.Instance.AddConnection(a, b);
+    const c = GraphManager.Instance.CreateNode({ X: 225, Y: 675 }, "C");
+    const d = GraphManager.Instance.CreateNode({ X: 675, Y: 675 }, "D");
+    const e = GraphManager.Instance.CreateNode({ X: 50, Y: 50 }, "E");
+    GraphManager.Instance.AddConnection(a, e);
+    GraphManager.Instance.AddConnection(a, c);
+    GraphManager.Instance.AddConnection(c, b);
     window.requestAnimationFrame(Update);
     FixedUpdate();
 }

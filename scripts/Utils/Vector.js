@@ -11,6 +11,18 @@ export class Vector {
             Y: a.Y + b.Y
         };
     }
+    static Subtract(a, b) {
+        return {
+            X: a.X - b.X,
+            Y: a.Y - b.Y,
+        };
+    }
+    static Negate(vector) {
+        return {
+            X: -vector.X,
+            Y: -vector.Y
+        };
+    }
     static Distance(a, b) {
         return Math.sqrt(this.DistanceSquared(a, b));
     }

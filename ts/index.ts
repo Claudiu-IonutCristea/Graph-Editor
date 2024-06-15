@@ -7,12 +7,14 @@ const canvasQ = document.querySelector<HTMLCanvasElement>("#canvas");
 const nodeRadiusQ = document.querySelector<HTMLInputElement>("#nodeRadius");
 const showFpsQ = document.querySelector<HTMLInputElement>("#showFps");
 const saveGraphQ = document.querySelector<HTMLButtonElement>("#saveGraph");
+const stepPhysicsQ = document.querySelector<HTMLButtonElement>("#stepPhysics");
 const ctxQ = canvasQ?.getContext("2d");
 
 if(!canvasQ || !ctxQ) { throw new Error("Canvas or 2DContext not found!"); }
 if(!nodeRadiusQ) { throw new Error("Node radius range input not found!"); }
 if(!showFpsQ) { throw new Error("Show FPS checkbox input not found!")}
 if(!saveGraphQ) { throw new Error("Save Graph button not found!")}
+if(!stepPhysicsQ) { throw new Error("Step Physics button not found!")}
 
 nodeRadiusQ.addEventListener("change", (e) => 
 {
@@ -23,6 +25,11 @@ nodeRadiusQ.addEventListener("change", (e) =>
 saveGraphQ.addEventListener("click", (e) => 
 {
     GraphManager.Instance.SaveGraph();
+});
+
+stepPhysicsQ.addEventListener("click", (e) =>
+{
+    Physics.Update();
 });
 
 Canvas.Canvas = canvasQ;
@@ -42,11 +49,13 @@ function Start(time: number)
 
     const a = GraphManager.Instance.CreateNode({X: 225, Y: 225}, "A");
     const b = GraphManager.Instance.CreateNode({X: 675, Y: 225}, "B");
-    // const c = GraphManager.Instance.CreateNode({X: 225, Y: 675}, "C");
-    // const d = GraphManager.Instance.CreateNode({X: 675, Y: 675}, "D");
-    // const e = GraphManager.Instance.CreateNode({X: 50, Y: 50}, "E");
+    const c = GraphManager.Instance.CreateNode({X: 225, Y: 675}, "C");
+    const d = GraphManager.Instance.CreateNode({X: 675, Y: 675}, "D");
+    const e = GraphManager.Instance.CreateNode({X: 50, Y: 50}, "E");
 
-    GraphManager.Instance.AddConnection(a, b);
+    GraphManager.Instance.AddConnection(a, e);
+    GraphManager.Instance.AddConnection(a, c);
+    GraphManager.Instance.AddConnection(c, b);
         
     window.requestAnimationFrame(Update);
     FixedUpdate();
