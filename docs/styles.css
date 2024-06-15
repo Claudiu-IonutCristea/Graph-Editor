@@ -2,22 +2,20 @@ body {
     background-color: #111;
 }
 
-.container {
+.flex-container {
     display: flex;
-    
 }
 
-.container .dir-row{
-    display: flex;
-    flex-direction: row;
-}
-
-.container .dir-col{
+.flex-container.column {
     display: flex;
     flex-direction: column;
 }
 
-canvas {
+.flex-container .form {
+    justify-content: center;
+}
+
+.canvas {
     background-color: #333;
 }
 

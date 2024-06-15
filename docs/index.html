@@ -8,22 +8,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="dir-row">
-            <canvas id="canvas">Canvas...</canvas>
-            
-            <div class="dir-col">
-                <div>
-                    <input type="number" id="nodeRadius" value="50"/>
-                    <label for="nodeRadius">Node Radius</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="showFps" value="false"/>
-                    <label for="showFps">show FPS</label>
-                </div>
-                <button type="button" id="saveGraph">Save Graph</button>
-                <button type="button" id="stepPhysics">Step Physics</button>
+    <div class="flex-container">
+        <canvas id="canvas" class="canvas">Canvas...</canvas>
+
+        <div class="flex-container col form">
+            <div>
+                <input type="number" id="nodeRadius" value="50"/>
+                <label for="nodeRadius">Node Radius</label>
             </div>
+            <div>
+                <input type="checkbox" id="showFps" value="false"/>
+                <label for="showFps">show FPS</label>
+            </div>
+            
+            <button type="button" id="saveGraph">Save Graph</button>
+            <button type="button" id="stepPhysics">Step Physics</button>
         </div>
     </div>
 

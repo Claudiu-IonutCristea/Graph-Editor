@@ -474,8 +474,6 @@ define("main", ["require", "exports", "Utils/Canvas", "Models/GraphManager", "Ut
         GraphManager_2.GraphManager.Instance.AddConnection(a, e);
         GraphManager_2.GraphManager.Instance.AddConnection(a, c);
         GraphManager_2.GraphManager.Instance.AddConnection(c, b);
-        window.requestAnimationFrame(Update);
-        FixedUpdate();
     }
     function Update(time) {
         Time_2.Time.Update(time);

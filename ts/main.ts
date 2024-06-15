@@ -57,8 +57,8 @@ function Start(time: number)
     GraphManager.Instance.AddConnection(a, c);
     GraphManager.Instance.AddConnection(c, b);
         
-    window.requestAnimationFrame(Update);
-    FixedUpdate();
+    //window.requestAnimationFrame(Update);
+    //FixedUpdate();
 }
 
 function Update(time: number)
