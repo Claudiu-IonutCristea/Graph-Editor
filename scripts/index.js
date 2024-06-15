@@ -1,6 +1,7 @@
 import { Canvas } from "./Utils/Canvas.js";
 import { GraphManager } from "./Models/GraphManager.js";
 import { Time } from "./Utils/Time.js";
+import { Physics } from "./Utils/Physics.js";
 const canvasQ = document.querySelector("#canvas");
 const nodeRadiusQ = document.querySelector("#nodeRadius");
 const showFpsQ = document.querySelector("#showFps");
@@ -33,29 +34,13 @@ window.requestAnimationFrame(Start);
 function Start(time) {
     Time.Start(time);
     GraphManager.Instance.NodeRadius = nodeRadiusQ.valueAsNumber;
-    GraphManager.Instance.DirectedGraph = true;
+    GraphManager.Instance.DirectedGraph = false;
     const a = GraphManager.Instance.CreateNode({ X: 225, Y: 225 }, "A");
     const b = GraphManager.Instance.CreateNode({ X: 675, Y: 225 }, "B");
-    const c = GraphManager.Instance.CreateNode({ X: 225, Y: 675 }, "C");
-    const d = GraphManager.Instance.CreateNode({ X: 675, Y: 675 }, "D");
-    const e = GraphManager.Instance.CreateNode({ X: 50, Y: 50 }, "E");
+    // const c = GraphManager.Instance.CreateNode({X: 225, Y: 675}, "C");
+    // const d = GraphManager.Instance.CreateNode({X: 675, Y: 675}, "D");
+    // const e = GraphManager.Instance.CreateNode({X: 50, Y: 50}, "E");
     GraphManager.Instance.AddConnection(a, b);
-    GraphManager.Instance.AddConnection(a, c);
-    GraphManager.Instance.AddConnection(c, d);
-    GraphManager.Instance.AddConnection(a, d);
-    const graphString = undefined; //= localStorage.getItem("debugGraph");
-    if (graphString) {
-        const graph = JSON.parse(graphString);
-        graph.nodes.forEach((node) => {
-            const n = GraphManager.Instance.CreateNode({ X: node.x, Y: node.y }, node.value);
-            n.Fixed = node.fixed;
-        });
-        graph.connections.forEach((conn) => {
-            const nodeA = GraphManager.Instance.GetNodeAt({ X: conn.nodeA.x, Y: conn.nodeA.y });
-            const nodeB = GraphManager.Instance.GetNodeAt({ X: conn.nodeB.x, Y: conn.nodeB.y });
-            GraphManager.Instance.AddConnection(nodeA, nodeB);
-        });
-    }
     window.requestAnimationFrame(Update);
     FixedUpdate();
 }
@@ -70,7 +55,7 @@ function Update(time) {
         Canvas.Ctx.textBaseline = "top";
         Canvas.Ctx.fillText(Time.FPS.toString(), 0, 0);
     }
-    GraphManager.Instance.UpdateGraph();
+    GraphManager.Instance.Draw();
     // Canvas.Ctx.beginPath();
     // Canvas.Ctx.arc(450, 450, 5, 0, 2 * Math.PI);
     // Canvas.Ctx.fillStyle = "red";
@@ -78,7 +63,7 @@ function Update(time) {
     window.requestAnimationFrame(Update);
 }
 function FixedUpdate() {
-    GraphManager.Instance.FixedUpdate();
+    Physics.Update();
     setTimeout(() => {
         FixedUpdate();
     }, Time.FixedDeltaTime * 1000);

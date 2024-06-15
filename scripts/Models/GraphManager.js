@@ -2,7 +2,6 @@ import { MyMath } from "../Utils/MyMath.js";
 import { GraphNode } from "./GraphNode.js";
 import { Canvas } from "../Utils/Canvas.js";
 import { GraphConnection } from "./GraphConnection.js";
-import { Physics } from "../Utils/Physics.js";
 import { Vector } from "../Utils/Vector.js";
 export class GraphManager {
     constructor() {
@@ -10,8 +9,6 @@ export class GraphManager {
         this.connections = new Array();
         this.nodeRadius = 0;
         this.directedGraph = false;
-        this.idealConnectionDistance = 200 + 100; //this.nodeRadius * 2;
-        this.idealConnectionDistanceFactor = 0.2;
         this.isMouseMoving = false;
         this.mouseOffsetFromNodePos = { X: 0, Y: 0 };
         Canvas.Canvas.addEventListener("mousedown", (ev) => this.OnCanvasMouseDown(ev));
@@ -35,6 +32,8 @@ export class GraphManager {
         this.directedGraph = value;
         this.connections.forEach((conn) => conn.Directed = value);
     }
+    get Nodes() { return this.nodes; }
+    get Connections() { return this.connections; }
     SaveGraph() {
         const graph = {
             nodes: this.nodes,
@@ -86,70 +85,12 @@ export class GraphManager {
             (conn.NodeA === b && conn.NodeB === a));
     }
     //#endregion
-    UpdateGraph() {
+    Draw() {
         this.connections.forEach((conn) => {
             conn.Draw();
         });
         this.nodes.forEach((node) => {
             node.Draw();
-        });
-    }
-    FixedUpdate() {
-        this.ApplyForces();
-        this.ApplyGravity();
-        this.nodes.forEach((node) => Physics.UpdatePosition(node));
-    }
-    ApplyGravity() {
-        const centerPos = { X: Canvas.Canvas.width / 2, Y: Canvas.Canvas.height / 2 };
-        const gravityFactor = 7e1;
-        this.nodes.forEach((affectedNode) => {
-            if (affectedNode.Fixed || affectedNode === this.selectedNode) {
-                return;
-            }
-            const dl = {
-                X: centerPos.X - affectedNode.X,
-                Y: centerPos.Y - affectedNode.Y,
-            };
-            const force = {
-                X: gravityFactor * dl.X,
-                Y: gravityFactor * dl.Y
-            };
-            Physics.AddForce(affectedNode, force);
-        });
-    }
-    ApplyForces() {
-        const attractionFactor = 5e2;
-        const repulsionFactor = 2e8;
-        this.nodes.forEach((affectedNode) => {
-            if (affectedNode.Fixed || affectedNode === this.selectedNode) {
-                return;
-            }
-            //pull away from other nodes
-            this.nodes.filter((node) => node !== affectedNode).forEach((otherNode) => {
-                const repulsionVector = Vector.Normalize({
-                    X: affectedNode.X - otherNode.X,
-                    Y: affectedNode.Y - otherNode.Y
-                });
-                const attractionVector = Vector.Normalize({
-                    X: otherNode.X - affectedNode.X,
-                    Y: otherNode.Y - affectedNode.Y
-                });
-                const distanceSquared = Vector.DistanceSquared(affectedNode, otherNode);
-                const connection = this.GetConnection(affectedNode, otherNode);
-                if (connection) {
-                    const dl = this.idealConnectionDistance - connection.Distance;
-                    const attractionForce = {
-                        X: repulsionVector.X * attractionFactor * dl,
-                        Y: repulsionVector.Y * attractionFactor * dl,
-                    };
-                    Physics.AddForce(affectedNode, attractionForce);
-                }
-                const repulsionForce = {
-                    X: (repulsionVector.X * repulsionFactor) / distanceSquared,
-                    Y: (repulsionVector.Y * repulsionFactor) / distanceSquared,
-                };
-                Physics.AddForce(affectedNode, repulsionForce);
-            });
         });
     }
     //#region Mouse Events
@@ -164,7 +105,6 @@ export class GraphManager {
                 X: this.selectedNode.X - mousePos.X,
                 Y: this.selectedNode.Y - mousePos.Y
             };
-        this.selectedNode.ResetVelocity();
         console.log(`Clicked on node at ${Vector.String(this.selectedNode)}`);
     }
     OnCanvasMouseUp(event) {
@@ -178,7 +118,6 @@ export class GraphManager {
         else {
             //a node has been clicked (but NOT moved)
             this.selectedNode.Fixed = !this.selectedNode.Fixed;
-            Physics.AddForce(this.selectedNode, { X: 5, Y: 10 });
         }
         this.isMouseMoving = false;
         this.selectedNode = undefined;

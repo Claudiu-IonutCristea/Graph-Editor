@@ -14,8 +14,6 @@ export class GraphManager
     private connections = new Array<GraphConnection>();
     private nodeRadius = 0;
     private directedGraph = false;
-    private idealConnectionDistance = 200 + 100//this.nodeRadius * 2;
-    private idealConnectionDistanceFactor = 0.2;
 
     private isMouseMoving = false;
     private selectedNode: GraphNode | undefined;
@@ -52,6 +50,9 @@ export class GraphManager
         this.directedGraph = value;
         this.connections.forEach((conn) => conn.Directed = value);
     }
+
+    public get Nodes() { return this.nodes; }
+    public get Connections() { return this.connections; }
 
     public SaveGraph()
     {
@@ -129,7 +130,7 @@ export class GraphManager
     }
     //#endregion
 
-    public UpdateGraph()
+    public Draw()
     {
         this.connections.forEach((conn) =>
         {
@@ -139,95 +140,6 @@ export class GraphManager
         this.nodes.forEach((node) => 
         {
             node.Draw();
-        });
-    }
-
-    public FixedUpdate()
-    {
-        this.ApplyForces();
-        this.ApplyGravity();
-
-        this.nodes.forEach((node) => Physics.UpdatePosition(node));
-    }
-
-    public ApplyGravity()
-    {
-        const centerPos: IVector = {X: Canvas.Canvas.width / 2, Y:Canvas.Canvas.height / 2};
-        const gravityFactor = 7e1;
-
-        this.nodes.forEach((affectedNode) => 
-        {
-            if(affectedNode.Fixed || affectedNode === this.selectedNode)
-            {
-                return;
-            }
-
-            const dl: IVector = 
-            {
-                X: centerPos.X - affectedNode.X,
-                Y: centerPos.Y - affectedNode.Y,
-            }
-            
-            const force: IVector = 
-            {
-                X: gravityFactor * dl.X,
-                Y: gravityFactor * dl.Y
-            }
-
-            Physics.AddForce(affectedNode, force);
-        });
-    }
-
-    private ApplyForces()
-    {
-        const attractionFactor = 5e2;
-        const repulsionFactor = 2e8;
-
-        this.nodes.forEach((affectedNode) => 
-        {
-            if(affectedNode.Fixed || affectedNode === this.selectedNode)
-            {
-                return;
-            }
-
-            //pull away from other nodes
-            this.nodes.filter((node) => node !== affectedNode).forEach((otherNode) =>
-            {
-                const repulsionVector: IVector = Vector.Normalize(
-                {
-                    X: affectedNode.X - otherNode.X,
-                    Y: affectedNode.Y - otherNode.Y
-                });
-                const attractionVector: IVector = Vector.Normalize(
-                {
-                    X: otherNode.X - affectedNode.X,
-                    Y: otherNode.Y - affectedNode.Y
-                });
-
-                const distanceSquared = Vector.DistanceSquared(affectedNode, otherNode);
-                const connection = this.GetConnection(affectedNode, otherNode);
-
-                if(connection)
-                {
-                    const dl = this.idealConnectionDistance - connection.Distance;
-                    
-                    const attractionForce: IVector = 
-                    {
-                        X: repulsionVector.X * attractionFactor * dl,
-                        Y: repulsionVector.Y * attractionFactor * dl,
-                    }
-
-                    Physics.AddForce(affectedNode, attractionForce)
-                }
-
-                const repulsionForce: IVector = 
-                {
-                    X: (repulsionVector.X * repulsionFactor) / distanceSquared,
-                    Y: (repulsionVector.Y * repulsionFactor) / distanceSquared,
-                }
-                
-                Physics.AddForce(affectedNode, repulsionForce);
-            });
         });
     }
 
@@ -246,7 +158,6 @@ export class GraphManager
             Y: this.selectedNode.Y - mousePos.Y
         };
 
-        this.selectedNode.ResetVelocity();
         console.log(`Clicked on node at ${Vector.String(this.selectedNode)}`);
     }
 
@@ -264,7 +175,6 @@ export class GraphManager
         {
             //a node has been clicked (but NOT moved)
             this.selectedNode.Fixed = !this.selectedNode.Fixed;
-            Physics.AddForce(this.selectedNode, {X: 5, Y: 10});
         }
 
         this.isMouseMoving = false;

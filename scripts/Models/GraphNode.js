@@ -1,6 +1,4 @@
 import { Canvas } from "../Utils/Canvas.js";
-import { Vector } from "../Utils/Vector.js";
-import { Time } from "../Utils/Time.js";
 export class GraphNode {
     constructor(vector, value) {
         this.x = vector.X;
@@ -8,10 +6,7 @@ export class GraphNode {
         this.value = value;
         this.radius = 0;
         this.fixed = false;
-        this.mass = 1;
-        this.dragCoef = 8e-2;
-        this.velocity = Vector.Zero;
-        this.forces = new Array();
+        this.forces = new Array;
     }
     get X() { return this.x; }
     set X(value) { this.x = value; }
@@ -23,46 +18,7 @@ export class GraphNode {
     set Value(value) { this.value = value; }
     get Fixed() { return this.fixed; }
     set Fixed(value) { this.fixed = value; }
-    get Mass() { return this.mass; }
-    set Mass(value) { this.mass = value; }
-    get Velocity() {
-        const mag = Vector.Magnitude(this.velocity);
-        if (mag < 5) {
-            this.velocity = Vector.Zero;
-        }
-        return this.velocity;
-    }
-    get Direction() { return Vector.Normalize(this.velocity); }
-    get DragForce() {
-        const dragForce = {
-            X: this.dragCoef * this.Velocity.X * this.Velocity.X * -Math.sign(this.Velocity.X),
-            Y: this.dragCoef * this.Velocity.Y * this.Velocity.Y * -Math.sign(this.Velocity.Y),
-        };
-        return dragForce;
-    }
-    AddForce(force) {
-        this.forces.push(force);
-    }
-    UpdatePosition() {
-        this.AddForce(this.DragForce);
-        let force = Vector.Zero;
-        let f = this.forces.pop();
-        while (f) {
-            force = Vector.Add(force, f);
-            f = this.forces.pop();
-        }
-        const acceleration = {
-            X: force.X / this.mass,
-            Y: force.Y / this.mass
-        };
-        this.Velocity.X += acceleration.X * Time.FixedDeltaTime;
-        this.Velocity.Y += acceleration.Y * Time.FixedDeltaTime;
-        this.X += this.Velocity.X * Time.FixedDeltaTime;
-        this.Y += this.Velocity.Y * Time.FixedDeltaTime;
-    }
-    ResetVelocity() {
-        this.velocity = Vector.Zero;
-    }
+    get Forces() { return this.forces; }
     Draw() {
         Canvas.Ctx.beginPath();
         Canvas.Ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);

@@ -1,10 +1,9 @@
-import { ICircle, MyMath } from "../Utils/MyMath.js";
+import { ICircle } from "../Utils/MyMath.js";
 import { Canvas } from "../Utils/Canvas.js";
 import { IPhysicsObject } from "../Utils/Physics.js";
 import { Vector, IVector } from "../Utils/Vector.js";
-import { Time } from "../Utils/Time.js";
 
-export class GraphNode implements ICircle, IPhysicsObject
+export class GraphNode implements IVector, ICircle, IPhysicsObject
 {
     private static strokeFixedNodeFactor = 2;
     private static strokeFactor = 0.15;
@@ -14,9 +13,6 @@ export class GraphNode implements ICircle, IPhysicsObject
     private radius: number;
     private value: string;
     private fixed: boolean;
-    private mass: number;
-    private dragCoef: number;
-    private velocity: IVector;
     private forces: Array<IVector>;
 
     constructor(vector: IVector, value: string)
@@ -27,10 +23,7 @@ export class GraphNode implements ICircle, IPhysicsObject
 
         this.radius = 0;
         this.fixed = false;
-        this.mass = 1;
-        this.dragCoef = 8e-2;
-        this.velocity = Vector.Zero;
-        this.forces = new Array<IVector>();
+        this.forces = new Array<IVector>;
     }
 
     public get X() { return this.x }
@@ -48,69 +41,7 @@ export class GraphNode implements ICircle, IPhysicsObject
     public get Fixed() { return this.fixed }
     public set Fixed(value: boolean) { this.fixed = value; }
 
-    public get Mass() { return this.mass }
-    public set Mass(value: number) { this.mass = value; }
-
-    public get Velocity() 
-    { 
-        const mag = Vector.Magnitude(this.velocity);
-
-        if(mag < 5)
-        {
-            this.velocity = Vector.Zero;
-        }
-
-        return this.velocity 
-    }
-
-    public get Direction() { return Vector.Normalize(this.velocity) }
-
-    public get DragForce()
-    {  
-        const dragForce: IVector = 
-        {
-            X: this.dragCoef * this.Velocity.X * this.Velocity.X * -Math.sign(this.Velocity.X),
-            Y: this.dragCoef * this.Velocity.Y * this.Velocity.Y * -Math.sign(this.Velocity.Y),
-        };
-
-        return dragForce;
-    }
-
-    public AddForce(force: IVector)
-    {
-        this.forces.push(force);
-    }
-
-    public UpdatePosition()
-    {
-        this.AddForce(this.DragForce);
-
-        let force = Vector.Zero;
-
-        let f = this.forces.pop();
-        while(f)
-        {
-            force = Vector.Add(force, f);
-            f = this.forces.pop();
-        }
-
-        const acceleration: IVector =
-        {
-            X: force.X / this.mass,
-            Y: force.Y / this.mass
-        };
-
-        this.Velocity.X += acceleration.X * Time.FixedDeltaTime;
-        this.Velocity.Y += acceleration.Y * Time.FixedDeltaTime;
-
-        this.X += this.Velocity.X * Time.FixedDeltaTime;
-        this.Y += this.Velocity.Y * Time.FixedDeltaTime;
-    }
-
-    public ResetVelocity()
-    {
-        this.velocity = Vector.Zero;
-    }
+    public get Forces() { return this.forces; }
 
     public Draw()
     {
