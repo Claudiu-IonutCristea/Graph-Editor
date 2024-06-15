@@ -1,7 +1,7 @@
-import { Canvas } from "./Utils/Canvas.js";
-import { GraphManager } from "./Models/GraphManager.js";
-import { Time } from "./Utils/Time.js";
-import { Physics } from "./Utils/Physics.js";
+import { Canvas } from "./Utils/Canvas";
+import { GraphManager } from "./Models/GraphManager";
+import { Time } from "./Utils/Time";
+import { Physics } from "./Utils/Physics";
 
 const canvasQ = document.querySelector<HTMLCanvasElement>("#canvas");
 const nodeRadiusQ = document.querySelector<HTMLInputElement>("#nodeRadius");

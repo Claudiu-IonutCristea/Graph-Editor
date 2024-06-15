@@ -1,5 +1,5 @@
-import { GraphConnection } from "../Models/GraphConnection.js";
-import { GraphNode } from "../Models/GraphNode.js";
+import { GraphConnection } from "../Models/GraphConnection";
+import { GraphNode } from "../Models/GraphNode";
 import { IVector } from "./Vector";
 
 export interface IGraph

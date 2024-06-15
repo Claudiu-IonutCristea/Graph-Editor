@@ -1,7 +1,7 @@
-import { ICircle } from "../Utils/MyMath.js";
-import { Canvas } from "../Utils/Canvas.js";
-import { IPhysicsObject } from "../Utils/Physics.js";
-import { Vector, IVector } from "../Utils/Vector.js";
+import { ICircle } from "../Utils/MyMath";
+import { Canvas } from "../Utils/Canvas";
+import { IPhysicsObject } from "../Utils/Physics";
+import { Vector, IVector } from "../Utils/Vector";
 
 export class GraphNode implements IVector, ICircle, IPhysicsObject
 {

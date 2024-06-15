@@ -1,7 +1,7 @@
-import { Canvas } from "../Utils/Canvas.js";
-import { GraphNode } from "./GraphNode.js";
-import { Vector, IVector } from "../Utils/Vector.js";
-import { IPhysicsSpring } from "../Utils/Physics.js";
+import { Canvas } from "../Utils/Canvas";
+import { GraphNode } from "./GraphNode";
+import { Vector, IVector } from "../Utils/Vector";
+import { IPhysicsSpring } from "../Utils/Physics";
 
 export class GraphConnection implements IPhysicsSpring
 {

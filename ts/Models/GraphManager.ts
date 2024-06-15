@@ -1,10 +1,10 @@
-import { IGraph, MyMath } from "../Utils/MyMath.js";
-import { GraphNode } from "./GraphNode.js";
-import { Canvas } from "../Utils/Canvas.js";
-import { GraphConnection } from "./GraphConnection.js";
-import { Time } from "../Utils/Time.js";
-import { Physics } from "../Utils/Physics.js";
-import { IVector, Vector } from "../Utils/Vector.js";
+import { IGraph, MyMath } from "../Utils/MyMath";
+import { GraphNode } from "./GraphNode";
+import { Canvas } from "../Utils/Canvas";
+import { GraphConnection } from "./GraphConnection";
+import { Time } from "../Utils/Time";
+import { Physics } from "../Utils/Physics";
+import { IVector, Vector } from "../Utils/Vector";
 
 export class GraphManager
 {

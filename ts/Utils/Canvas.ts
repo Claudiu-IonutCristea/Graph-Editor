@@ -1,4 +1,4 @@
-import { IVector } from "./Vector.js";
+import { IVector } from "./Vector";
 
 export class Canvas
 {

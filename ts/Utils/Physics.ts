@@ -1,7 +1,7 @@
-import { GraphManager } from "../Models/GraphManager.js";
-import { Canvas } from "./Canvas.js";
-import { Time } from "./Time.js";
-import { Vector, IVector } from "./Vector.js";
+import { GraphManager } from "../Models/GraphManager";
+import { Canvas } from "./Canvas";
+import { Time } from "./Time";
+import { Vector, IVector } from "./Vector";
 
 export interface IPhysicsObject extends IVector
 {
