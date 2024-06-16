@@ -11,19 +11,10 @@ modeRadioGroup.addEventListener("change", (e) =>
     switch(newMode)
     {
         case "force":
-            fetch("force.html")
-                .then((response) => response.text())
-                .then((html) => infoArea.innerHTML = html);
             break;
         case "edit":
-            fetch("edit.html")
-                .then((response) => response.text())
-                .then((html) => infoArea.innerHTML = html);
             break;
         case "config":
-            fetch("config.html")
-                .then((response) => response.text())
-                .then((html) => infoArea.innerHTML = html);
             break;
         default:
             throw new Error("unknown mode!");
