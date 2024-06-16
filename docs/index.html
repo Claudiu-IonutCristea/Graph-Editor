@@ -5,25 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="Graph-Editor">
     <title>Graph Editor</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/radioGroup.css">
 </head>
 <body>
-    <div class="flex-container">
-        <canvas id="canvas" class="canvas">Canvas...</canvas>
+    <canvas id="canvas" class="canvas defaultbg col-1">Canvas...</canvas>
 
-        <div class="flex-container col form">
-            <div>
-                <input type="number" id="nodeRadius" value="50"/>
-                <label for="nodeRadius">Node Radius</label>
-            </div>
-            <div>
-                <input type="checkbox" id="showFps" value="false"/>
-                <label for="showFps">show FPS</label>
-            </div>
-            
-            <button type="button" id="saveGraph">Save Graph</button>
-            <button type="button" id="stepPhysics">Step Physics</button>
+    <div id="modeRadioGroup" class="radio-group col-2 row-1">
+        <div class="radio-button">
+            <input type="radio" name="modeSelect" value="force" checked="checked">
+            <label for="forceMode">Force</label>
         </div>
+        <div class="radio-button">
+            <input type="radio" name="modeSelect" value="edit">
+            <label for="forceMode">Edit</label>
+        </div>
+        <div class="radio-button">
+            <input type="radio" name="modeSelect" value="config">
+            <label for="forceMode">Config</label>
+        </div>
+    </div>
+
+    <div id="infoArea" class="col-2 row-2 info-area">
+
+    </div>
+
+    <div class="col-2 row-3 my-info-area">
+        <a href="https://claudiucristea.net">Claudiu-Ionuț CRISTEA</a>
+        <a href="https://www.linkedin.com/in/claudiu-cristea-071280217/" target="_blank">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M37 0H3C2.20435 0 1.44129 0.316071 0.87868 0.87868C0.316071 1.44129 0 2.20435 0 3V37C0 37.7957 0.316071 38.5587 0.87868 39.1213C1.44129 39.6839 2.20435 40 3 40H37C37.7957 40 38.5587 39.6839 39.1213 39.1213C39.6839 38.5587 40 37.7957 40 37V3C40 2.20435 39.6839 1.44129 39.1213 0.87868C38.5587 0.316071 37.7957 0 37 0ZM12 34H6V16H12V34ZM9 12.5C8.31237 12.4803 7.64577 12.2585 7.0835 11.8622C6.52123 11.4658 6.08823 10.9126 5.83859 10.2716C5.58895 9.63053 5.53375 8.93016 5.67988 8.25794C5.82601 7.58573 6.16699 6.97148 6.66023 6.49195C7.15346 6.01242 7.77707 5.68887 8.45313 5.56173C9.12919 5.43459 9.82773 5.50949 10.4615 5.77708C11.0952 6.04468 11.636 6.49309 12.0164 7.0663C12.3967 7.6395 12.5997 8.31208 12.6 9C12.5842 9.9407 12.1967 10.8369 11.5221 11.4927C10.8475 12.1486 9.94077 12.5107 9 12.5ZM34 34H28V24.52C28 21.68 26.8 20.66 25.24 20.66C24.7826 20.6905 24.3358 20.811 23.9251 21.0146C23.5144 21.2183 23.148 21.5011 22.847 21.8467C22.5459 22.1924 22.3161 22.5941 22.1708 23.0289C22.0254 23.4636 21.9674 23.9228 22 24.38C21.9901 24.4731 21.9901 24.5669 22 24.66V34H16V16H21.8V18.6C22.3851 17.71 23.1889 16.9851 24.1344 16.4949C25.0799 16.0046 26.1355 15.7653 27.2 15.8C30.3 15.8 33.92 17.52 33.92 23.12L34 34Z" fill="white"/>
+            </svg>
+        </a>
+        <a href="https://github.com/Claudiu-IonutCristea/Graph-Editor" target="_blank">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9285 0.489807C10.6967 0.489807 0 11.2653 0 24.5961C0 35.2521 6.85371 44.2722 16.3616 47.4647C17.5504 47.7047 17.9858 46.946 17.9858 46.3078C17.9858 45.7489 17.9466 43.8333 17.9466 41.8374C11.2903 43.2745 9.90416 38.9638 9.90416 38.9638C8.83445 36.17 7.24947 35.4519 7.24947 35.4519C5.07086 33.9752 7.40816 33.9752 7.40816 33.9752C9.82481 34.1349 11.0929 36.4496 11.0929 36.4496C13.2318 40.1212 16.6785 39.0838 18.0651 38.4451C18.263 36.8885 18.8973 35.811 19.5708 35.2124C14.2619 34.6536 8.67624 32.5783 8.67624 23.3187C8.67624 20.6846 9.62645 18.5295 11.1321 16.8534C10.8945 16.2549 10.0624 13.7799 11.3701 10.4674C11.3701 10.4674 13.3905 9.82875 17.9461 12.9419C19.8965 12.4142 21.908 12.1458 23.9285 12.1435C25.9489 12.1435 28.0085 12.4232 29.9104 12.9419C34.4664 9.82875 36.4869 10.4674 36.4869 10.4674C37.7946 13.7799 36.962 16.2549 36.7244 16.8534C38.2697 18.5295 39.1807 20.6846 39.1807 23.3187C39.1807 32.5783 33.5951 34.6134 28.2465 35.2124C29.1184 35.9706 29.8707 37.4072 29.8707 39.6823C29.8707 42.9149 29.8315 45.5094 29.8315 46.3073C29.8315 46.946 30.2674 47.7047 31.4557 47.4652C40.9636 44.2717 47.8173 35.2521 47.8173 24.5961C47.8565 11.2653 37.1206 0.489807 23.9285 0.489807Z" fill="white"/>
+            </svg>            
+        </a>
     </div>
 
     <script data-main="scripts/main" src="scripts/require.js"></script>

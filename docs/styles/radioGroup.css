@@ -1,0 +1,70 @@
+:root{
+    --RadioModeSelect: #092B6C;
+    --RadioModeSelectStroke: #07063D;
+    --RadioModeSelectSelected: #0043C5;
+    --RadioModeSelectHighlight: #0057FF;
+}
+
+.radio-group {
+    display: flex;
+}
+
+.radio-group .radio-button {
+    background: var(--RadioModeSelect);
+    flex-grow: 1;
+    position: relative;
+
+    min-width: 120px;
+
+    border-top: 3px solid var(--RadioModeSelectStroke);
+    border-left: 3px solid var(--RadioModeSelectStroke);
+    border-bottom: 3px solid var(--RadioModeSelectStroke);
+}
+
+.radio-group .radio-button > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.radio-group input[type="radio"] {
+    opacity: 0;
+    z-index: 100;
+}
+
+.radio-group label {
+    z-index: 90;
+    margin: 0;
+    padding: 0;
+
+    font-size: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio-group .radio-button:first-of-type{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.radio-group .radio-button:last-of-type{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-right: 3px solid var(--RadioModeSelectStroke);
+}
+
+.radio-group input[type="radio"]:hover {
+    cursor: pointer;
+}
+
+/* .radio-group .radio-button:has(input[type="radio"]:hover) {
+    background: var(--RadioModeSelectHighlight);
+} */
+
+.radio-group .radio-button:has(input[type="radio"]:checked) {
+    background: var(--RadioModeSelectSelected);
+}

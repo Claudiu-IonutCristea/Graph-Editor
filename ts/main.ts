@@ -35,8 +35,8 @@ stepPhysicsQ.addEventListener("click", (e) =>
 Canvas.Canvas = canvasQ;
 Canvas.Ctx = ctxQ;
 
-Canvas.Canvas.width = 900;
-Canvas.Canvas.height = 900;
+//Canvas.Canvas.width = 900;
+//Canvas.Canvas.height = 900;
 
 window.requestAnimationFrame(Start);
 

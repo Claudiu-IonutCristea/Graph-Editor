@@ -1,3 +1,4 @@
+"use strict";
 define("Utils/Vector", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -459,8 +460,6 @@ define("main", ["require", "exports", "Utils/Canvas", "Models/GraphManager", "Ut
     });
     Canvas_5.Canvas.Canvas = canvasQ;
     Canvas_5.Canvas.Ctx = ctxQ;
-    Canvas_5.Canvas.Canvas.width = 900;
-    Canvas_5.Canvas.Canvas.height = 900;
     window.requestAnimationFrame(Start);
     function Start(time) {
         Time_2.Time.Start(time);
@@ -494,5 +493,34 @@ define("main", ["require", "exports", "Utils/Canvas", "Models/GraphManager", "Ut
         setTimeout(() => {
             FixedUpdate();
         }, Time_2.Time.FixedDeltaTime * 1000);
+    }
+});
+const modeRadioGroup = document.querySelector("#modeRadioGroup");
+const infoArea = document.querySelector("#infoArea");
+if (!modeRadioGroup)
+    throw new Error("Radio group not found!");
+if (!infoArea)
+    throw new Error("Info area not found!");
+modeRadioGroup.addEventListener("change", (e) => {
+    var _a;
+    const newMode = (_a = modeRadioGroup.querySelector("input[name=modeSelect]:checked")) === null || _a === void 0 ? void 0 : _a.value;
+    switch (newMode) {
+        case "force":
+            fetch("force.html")
+                .then((response) => response.text())
+                .then((html) => infoArea.innerHTML = html);
+            break;
+        case "edit":
+            fetch("edit.html")
+                .then((response) => response.text())
+                .then((html) => infoArea.innerHTML = html);
+            break;
+        case "config":
+            fetch("config.html")
+                .then((response) => response.text())
+                .then((html) => infoArea.innerHTML = html);
+            break;
+        default:
+            throw new Error("unknown mode!");
     }
 });
