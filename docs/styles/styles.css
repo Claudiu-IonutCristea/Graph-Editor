@@ -3,15 +3,15 @@
     --canvas: #333333;
     --ButtonBg: #ACACAC;
 }
-
+/* CSS Media Queries */
 body {
     background-color: var(--background);
     display: grid;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: 80px 600px 50px;
-    margin: 50px;
-    column-gap: 50px;
-    row-gap: 30px;
+    grid-template-rows: 72px 800px 45px;
+    margin: 2dvh;
+    column-gap: 20px;
+    row-gap: 15px;
 }
 
 .canvas {
@@ -44,6 +44,8 @@ body {
 .info-area {
     border: 5px solid white;
     border-radius: 30px;
+    padding: 10px;
+    font-size: 22px;
 }
 
 .my-info-area {
@@ -54,16 +56,16 @@ body {
 
 .my-info-area a {
     font-weight: bold;
-    font-size: 24px;
-    color: white;
+    font-size: 22px;
     text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .canvas.defaultbg {
     background-color: var(--canvas);
 }
 
+.info-area li,
+.my-info-area a,
 p,
 label {
     color: white;

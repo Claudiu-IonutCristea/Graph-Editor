@@ -497,21 +497,15 @@ define("main", ["require", "exports", "Utils/Canvas", "Models/GraphManager", "Ut
 });
 const modeRadioGroup = document.querySelector("#modeRadioGroup");
 const infoArea = document.querySelector("#infoArea");
-if (!modeRadioGroup)
-    throw new Error("Radio group not found!");
-if (!infoArea)
-    throw new Error("Info area not found!");
+const areas = [
+    { input: modeRadioGroup.querySelector("#force"), area: infoArea.querySelector("#force") },
+    { input: modeRadioGroup.querySelector("#edit"), area: infoArea.querySelector("#edit") },
+    { input: modeRadioGroup.querySelector("#config"), area: infoArea.querySelector("#config") },
+];
+SetNewMode();
 modeRadioGroup.addEventListener("change", (e) => {
-    var _a;
-    const newMode = (_a = modeRadioGroup.querySelector("input[name=modeSelect]:checked")) === null || _a === void 0 ? void 0 : _a.value;
-    switch (newMode) {
-        case "force":
-            break;
-        case "edit":
-            break;
-        case "config":
-            break;
-        default:
-            throw new Error("unknown mode!");
-    }
+    SetNewMode();
 });
+function SetNewMode() {
+    areas.forEach((pair) => pair.area.hidden = !pair.input.checked);
+}
